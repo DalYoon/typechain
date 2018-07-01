@@ -6,7 +6,9 @@
   "scripts": {
     "start": "tsc-watch --onSuccess \" node dist/index.js \" "
   },
-  "dependencies": {},
+  "dependencies": {
+    "crypto-js": "^3.1.9-1"
+  },
   "devDependencies": {
     "tsc-watch": "^1.0.22"
   }

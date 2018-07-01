@@ -1,21 +1,36 @@
-class Human {
-  public name: string;
-  public age: number;
-  public gender: string;
+import * as CryptoJS from "crypto-js";
 
-  constructor(name: string, age: number, gender: string) {
-    this.name = name;
-    this.age = age;
-    this.gender = gender;
+class Block {
+  public index: number;
+  public hash: string;
+  public prevHash: string;
+  public data: string;
+  public timestamp: number;
+
+  static calculateBlockHash = (
+    index: number,
+    prevHash: string,
+    data: string,
+    timestamp: number
+  ): string => CryptoJS.SHA256(index + prevHash + data + timestamp).toString();
+
+  constructor(index: number, hash: string, prevHash: string, data: string, timestamp: number) {
+    this.index = index;
+    this.hash = hash;
+    this.prevHash = prevHash;
+    this.data = data;
+    this.timestamp = timestamp;
   }
 }
 
-const dal = new Human("dal", 30, "male");
+const genBlock = new Block(0, "0202022020020", "", "Hello", 123456);
 
-const sayHi = (person: Human) => {
-  console.log(`Hello ${person.name} you are ${person.age}, and ${person.gender}`);
-};
+let blockchain: Block[] = [genBlock];
 
-sayHi(dal);
+const getBlockchain = (): Block[] => blockchain;
+const getLatestBlock = (): Block => blockchain[blockchain.length - 1];
+const getNewTimeStamp = (): number => Math.round(new Date().getTime() / 1000);
+
+console.log(blockchain);
 
 export {};
